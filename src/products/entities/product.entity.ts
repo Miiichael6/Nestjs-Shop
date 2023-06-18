@@ -1,8 +1,10 @@
+import { ProductImage } from "./product-image.entity";
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 
@@ -32,10 +34,19 @@ export class Product {
   @Column("text")
   gender: string;
 
-  @Column("text", {array: true, default: []})
-  tags: string[]
+  @Column("text", { array: true, default: [] })
+  tags: string[];
 
-  // images
+  // Un producto tiene muchas imagenes
+  @OneToMany(
+    () => ProductImage,
+    (productImage) => productImage.product,
+    { cascade: true, eager: true }
+    // el "eager" hace que no tengamos que hacer relaciones en traer otras tablas
+    //  en peticiones GET
+    // porqu las trae automaticamente
+  )
+  images?: ProductImage[];
 
   @BeforeInsert()
   checkSlugInsert() {

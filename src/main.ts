@@ -1,11 +1,12 @@
-import { ValidationPipe } from "@nestjs/common";
+import { ValidationPipe, Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 
 async function main() {
   const app = await NestFactory.create(AppModule);
+  const logger = new Logger("main");
 
-  app.setGlobalPrefix("api"); // prefijo /api
+  app.setGlobalPrefix("api"); // prefij o /api
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -16,9 +17,8 @@ async function main() {
       //   enableImplicitConversion: true,
       // }
     })
-  )
-
-
-  await app.listen(4000);
+  );
+  await app.listen(process.env.PORT);
+  logger.log(`http://localhost:${process.env.PORT}`);
 }
 main();
