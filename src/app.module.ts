@@ -28,9 +28,13 @@ import { AuthModule } from './auth/auth.module';
     // }),
 
     CommonModule,
+
     ProductsModule, 
+
     SeedModule,
+
     FilesModule,
+    
     AuthModule,
   ],
 })

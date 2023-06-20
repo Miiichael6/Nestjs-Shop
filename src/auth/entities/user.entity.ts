@@ -1,4 +1,10 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  BeforeInsert,
+  BeforeUpdate,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import * as bcrypt from "bcrypt";
 
 @Entity("users")
@@ -24,5 +30,15 @@ export class User {
   @BeforeInsert()
   hashPassword() {
     this.password = bcrypt.hashSync(this.password, 10);
+  }
+
+  @BeforeInsert()
+  checkFieldBeforeInsert() {
+    this.email = this.email.toLowerCase().trim();
+  }
+
+  @BeforeUpdate()
+  checkFieldBeforeUpdate() {
+    this.checkFieldBeforeInsert();
   }
 }
