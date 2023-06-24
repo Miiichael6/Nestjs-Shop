@@ -1,9 +1,11 @@
+import { User } from "src/auth/entities/user.entity";
 import { ProductImage } from "./product-image.entity";
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -47,6 +49,9 @@ export class Product {
     // porqu las trae automaticamente
   )
   images?: ProductImage[];
+
+  @ManyToOne(() => User, (user) => user.product, {onDelete: "CASCADE"})
+  user: User
 
   @BeforeInsert()
   checkSlugInsert() {
