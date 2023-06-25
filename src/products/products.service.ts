@@ -21,10 +21,8 @@ export class ProductsService {
   constructor(
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
-
     @InjectRepository(ProductImage)
     private readonly productImageRepository: Repository<ProductImage>,
-
     private readonly dataSource: DataSource
   ) {}
 
